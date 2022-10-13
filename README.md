@@ -1,8 +1,5 @@
 # Allset action for running automated end-to-end and integration tests against deployed environments.
 
-## Prerequisites
-1. 
-
 ## Usage
 Adding the following to your workflow will allow you to run automated tests against the environment you just deployed to.
 
