@@ -6,9 +6,9 @@ inputs:
     description: "The environment to run against. E.g. 'edge', or 'production'."
     required: true
   test_set:
-    description: "The sub-set(directory) of tests to run. Defaults to `workflows` which includes all e2e smoke tests."
+    description: "The sub-set(directory) of tests to run. Defaults to `tests/workflows` which includes all e2e smoke tests."
     required: false
-    default: "workflows"
+    default: "tests/workflows"
 
   package_token:
     description: "The Github packages token to use for private NPM Repos"
@@ -50,7 +50,7 @@ runs:
       shell: bash
 
     - name: Run Tests
-      run: npm run test:${{ inputs.environment }}
+      run: npm run test:${{ inputs.environment }} ${{ inputs.test_set }}
       shell: bash
 
     - name: Save Test Results
