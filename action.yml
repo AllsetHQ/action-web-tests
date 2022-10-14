@@ -41,14 +41,23 @@ runs:
       run: npm set '//npm.pkg.github.com/:_authToken' ${{ inputs.package_token }}
       shell: bash
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: npm ci
       shell: bash
 
-    - name: Install playwright
-      run: npm i -g playwright@latest
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
       shell: bash
 
-    - name: Run tests
+    - name: Run Tests
       run: npm run test:${{ inputs.environment }}
       shell: bash
+
+    - name: Save Test Results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
+
