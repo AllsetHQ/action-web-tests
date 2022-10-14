@@ -27,8 +27,8 @@ runs:
         ssh-key: ${{ inputs.repo_token }}
         repository: AllsetHQ/web-tests
 
-    - name: Change directory to action
-      run: cd ${{ github.action_path }}
+    - name: TEST list 
+      run: ll
       shell: bash
 
     - name: Install NodeJS for Github Actions
