@@ -28,7 +28,7 @@ runs:
         repository: AllsetHQ/web-tests
 
     - name: TEST list 
-      run: ll
+      run: ls -l .
       shell: bash
 
     - name: Install NodeJS for Github Actions
