@@ -27,6 +27,10 @@ runs:
         ssh-key: ${{ inputs.repo_token }}
         repository: AllsetHQ/web-tests
 
+    - name: Change directory to action
+      run: cd ${{ github.action_path }}
+      shell: bash
+
     - name: Install NodeJS for Github Actions
       uses: actions/setup-node@v3
       with:
@@ -36,23 +40,15 @@ runs:
     - name: Authenticate with Github Packages
       run: npm set '//npm.pkg.github.com/:_authToken' ${{ inputs.package_token }}
       shell: bash
-      with:
-        working-directory: ./web-tests
 
     - name: Install dependencies
       run: npm ci
       shell: bash
-      with:
-        working-directory: ./web-tests
 
     - name: Install playwright
       run: npm i -g playwright@latest
       shell: bash
-      with:
-        working-directory: ./web-tests
 
     - name: Run tests
       run: npm run test:${{ inputs.environment }}
       shell: bash
-      with:
-        working-directory: ./web-tests
