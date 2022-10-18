@@ -16,6 +16,9 @@ inputs:
   repo_token:
     description: "The SSH Deploy Token used to access the private AllsetHQ/web-tests repo"
     required: true
+  slack_url:
+    description: "The webhook URL to send slack messages notifying test results to."
+    required: true
 
 runs:
   using: "composite"
@@ -61,3 +64,21 @@ runs:
         path: playwright-report/
         retention-days: 30
 
+    - name: Send Slack notification of successful tests
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_FOOTER: ''
+        SLACK_COLOR: 'good'
+        SLACK_MESSAGE: ':dev::test_tube::done:'
+        SLACK_TITLE: 'Smoke Tests'
+        SLACK_WEBHOOK: ${{ inputs.slack_url }}
+
+    - name: Send Slack notification of failed tests
+      if: failure()
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_FOOTER: ''
+        SLACK_COLOR: 'danger'
+        SLACK_MESSAGE: ':dev::test_tube::failed:'
+        SLACK_TITLE: 'Smoke Tests'
+        SLACK_WEBHOOK: ${{ inputs.slack_url }}
