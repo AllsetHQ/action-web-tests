@@ -48,7 +48,22 @@ runs:
       run: npm ci
       shell: bash
 
+    - name: Determine Playwright version
+      id: playwright-version
+      run: echo -n "::set-output name=version::$(npm ls @playwright/test --json | jq --raw-output '.dependencies["@playwright/test"].version')"
+      shell: bash
+
+    - name: Restore cached Playwright browsers
+      id: playwright-cache
+      uses: actions/cache@v3
+      with:
+        path: '~/.cache/ms-playwright'
+        key: 'playwright-${{ steps.playwright-version.outputs.version }}'
+        resore-keys: |
+          playwright-
+
     - name: Install Playwright Browsers
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
       run: npx playwright install chromium webkit
       shell: bash
 
