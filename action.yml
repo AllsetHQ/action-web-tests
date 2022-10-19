@@ -30,10 +30,6 @@ runs:
         ssh-key: ${{ inputs.repo_token }}
         repository: AllsetHQ/web-tests
 
-    - name: TEST list 
-      run: ls -l .
-      shell: bash
-
     - name: Install NodeJS for Github Actions
       uses: actions/setup-node@v3
       with:
@@ -50,7 +46,7 @@ runs:
 
     - name: Determine Playwright version
       id: playwright-version
-      run: echo -n "name=version::$(npm ls @playwright/test --json | jq --raw-output '.dependencies["@playwright/test"].version')" >> $GITHUB_OUTPUT
+      run: echo -n "version=$(npm ls @playwright/test --json | jq --raw-output '.dependencies["@playwright/test"].version')" >> $GITHUB_OUTPUT
       shell: bash
 
     - name: Restore cached Playwright browsers
