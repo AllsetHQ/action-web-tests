@@ -25,7 +25,7 @@ runs:
 
   steps:
     - name: Checkout web-tests
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ssh-key: ${{ inputs.repo_token }}
         repository: AllsetHQ/web-tests
